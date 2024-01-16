@@ -152,6 +152,38 @@ public class SimpleRuleSetTest {
         assertEquals(dark.getScore(), fastGame.dark.score);
     }
 
+    @Test
+    public void testBackwardMovement() {
+        GameSettings<Roll> settings = GameSettings.TOURNAMENTENGINE;
+        SimpleRuleSet<Piece, PlayerState, Roll> rules = RuleSet.createSimple(settings);
+        Dice<Roll> sampleDice = rules.getDiceFactory().createDice();
+
+        Game<Piece, PlayerState, Roll> game = Game.create(settings);
+
+        assertEquals(game.isWaitingForRoll(), true);
+
+        // Light player rolls 3.
+        game.rollDice(sampleDice.generateRoll(3));
+        List<Move<Piece>> moves = game.findAvailableMoves();
+        assertEquals(moves.size(), 1);
+        game.makeMove(moves.get(0));
+
+        // Dark player rolls 3.
+        game.rollDice(sampleDice.generateRoll(3));
+        moves = game.findAvailableMoves();
+        assertEquals(moves.size(), 1);
+        game.makeMove(moves.get(0));
+
+        // Light player rolls 2 and it can now move in two directions + introduce a piece.
+        game.rollDice(sampleDice.generateRoll(2));
+        moves = game.findAvailableMoves();
+        assertEquals(moves.size(), 3);
+
+        System.out.println(game.getBoard().toString());
+
+        fail("movement has to be optional, and allowed only when there is no alternative");
+    }
+
     /**
      * Tests whether the FastGame rules match the StandardRuleSet rules.
      */
