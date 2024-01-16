@@ -526,4 +526,15 @@ public class Game<P extends Piece, S extends PlayerState, R extends Roll> {
     public static @Nonnull Game<Piece, PlayerState, Roll> createAseb() {
         return create(GameSettings.ASEB);
     }
+
+    /**
+     * Creates a game that follows the rules proposed by société internationale d'Ur.
+     * This uses the simple rules, the standard board shape, Bell's path, unsafe
+     * rosette tiles, the standard dice, optional backwards movement, and seven
+     * starting pieces per player.
+     * @return A game that follows société internationale d'Ur proposed simple rules.
+     */
+    public static @Nonnull Game<Piece, PlayerState, Roll> createTournamentEngine() {
+        return create(GameSettings.TOURNAMENTENGINE);
+    }
 }
