@@ -30,6 +30,7 @@ public class GameSettings<R extends Roll> {
             7,
             true,
             true,
+            false,
             false
     );
 
@@ -43,6 +44,7 @@ public class GameSettings<R extends Roll> {
             7,
             false,
             true,
+            false,
             false
     );
 
@@ -56,6 +58,7 @@ public class GameSettings<R extends Roll> {
             5,
             true,
             true,
+            false,
             false
     );
 
@@ -69,6 +72,21 @@ public class GameSettings<R extends Roll> {
             5,
             false,
             true,
+            true,
+            false
+    );
+
+    /**
+     * The settings used for "Tournament Engine", proposed by société internationale d'Ur.
+     */
+    public static final @Nonnull GameSettings<Roll> TOURNAMENTENGINE = new GameSettings<>(
+            new StandardBoardShape(),
+            new MastersPathPair(),
+            DiceType.FOUR_BINARY,
+            7,
+            true,
+            false,
+            false,
             true
     );
 
@@ -110,6 +128,11 @@ public class GameSettings<R extends Roll> {
     private final boolean capturesGrantExtraRolls;
 
     /**
+     * Whether pieces are allowed the option to move backwards.
+     */
+    private final boolean optionalBackwardMoves;
+
+    /**
      * Instantiates a new set of game settings for the Royal Game of Ur.
      * @param boardShape The shape of the game board.
      * @param paths The paths that each player must take around the board.
@@ -117,7 +140,7 @@ public class GameSettings<R extends Roll> {
      * @param startingPieceCount The number of pieces that each player starts with.
      * @param safeRosettes Whether pieces on rosette tiles are safe from capture.
      * @param rosettesGrantExtraRolls Whether landing on a rosette grants an extra roll.
-     * @param capturesGrantExtraRolls Whether capturing a piece grants an extra roll.
+     * @param optionalBackwardMoves Whether a piece is allowed to move backwards.
      */
     public GameSettings(
             @Nonnull BoardShape boardShape,
@@ -126,7 +149,8 @@ public class GameSettings<R extends Roll> {
             int startingPieceCount,
             boolean safeRosettes,
             boolean rosettesGrantExtraRolls,
-            boolean capturesGrantExtraRolls
+            boolean capturesGrantExtraRolls,
+            boolean optionalBackwardMoves
     ) {
         if (startingPieceCount < 1) {
             throw new IllegalArgumentException(
@@ -141,6 +165,7 @@ public class GameSettings<R extends Roll> {
         this.safeRosettes = safeRosettes;
         this.rosettesGrantExtraRolls = rosettesGrantExtraRolls;
         this.capturesGrantExtraRolls = capturesGrantExtraRolls;
+        this.optionalBackwardMoves = optionalBackwardMoves;
     }
 
     /**
@@ -202,6 +227,14 @@ public class GameSettings<R extends Roll> {
     }
 
     /**
+     * Gets whether pieces are allowed optional backward moves.
+     * @return Whether a piece can move backwards.
+     */
+    public boolean areOptionalBackwardMovesAllowed() {
+        return optionalBackwardMoves;
+    }
+
+    /**
      * Generates new game settings with {@code boardShape}.
      * @param boardShape The board shape to use for the new game settings.
      * @return New game settings updated with a new board shape.
@@ -210,7 +243,8 @@ public class GameSettings<R extends Roll> {
         return new GameSettings<>(
                 boardShape, paths, diceFactory,
                 startingPieceCount, safeRosettes,
-                rosettesGrantExtraRolls, capturesGrantExtraRolls
+                rosettesGrantExtraRolls, capturesGrantExtraRolls,
+                optionalBackwardMoves
         );
     }
 
@@ -233,7 +267,8 @@ public class GameSettings<R extends Roll> {
         return new GameSettings<>(
                 boardShape, paths, diceFactory,
                 startingPieceCount, safeRosettes,
-                rosettesGrantExtraRolls, capturesGrantExtraRolls
+                rosettesGrantExtraRolls, capturesGrantExtraRolls,
+                optionalBackwardMoves
         );
     }
 
@@ -259,7 +294,8 @@ public class GameSettings<R extends Roll> {
         return new GameSettings<>(
                 boardShape, paths, diceFactory,
                 startingPieceCount, safeRosettes,
-                rosettesGrantExtraRolls, capturesGrantExtraRolls
+                rosettesGrantExtraRolls, capturesGrantExtraRolls,
+                optionalBackwardMoves
         );
     }
 
@@ -273,7 +309,8 @@ public class GameSettings<R extends Roll> {
         return new GameSettings<>(
                 boardShape, paths, diceFactory,
                 startingPieceCount, safeRosettes,
-                rosettesGrantExtraRolls, capturesGrantExtraRolls
+                rosettesGrantExtraRolls, capturesGrantExtraRolls,
+                optionalBackwardMoves
         );
     }
 
@@ -288,7 +325,8 @@ public class GameSettings<R extends Roll> {
         return new GameSettings<>(
                 boardShape, paths, diceFactory,
                 startingPieceCount, safeRosettes,
-                rosettesGrantExtraRolls, capturesGrantExtraRolls
+                rosettesGrantExtraRolls, capturesGrantExtraRolls,
+                optionalBackwardMoves
         );
     }
 
@@ -303,7 +341,8 @@ public class GameSettings<R extends Roll> {
         return new GameSettings<>(
                 boardShape, paths, diceFactory,
                 startingPieceCount, safeRosettes,
-                rosettesGrantExtraRolls, capturesGrantExtraRolls
+                rosettesGrantExtraRolls, capturesGrantExtraRolls,
+                optionalBackwardMoves
         );
     }
 
@@ -318,7 +357,8 @@ public class GameSettings<R extends Roll> {
         return new GameSettings<>(
                 boardShape, paths, diceFactory,
                 startingPieceCount, safeRosettes,
-                rosettesGrantExtraRolls, capturesGrantExtraRolls
+                rosettesGrantExtraRolls, capturesGrantExtraRolls,
+                optionalBackwardMoves
         );
     }
 
@@ -334,6 +374,7 @@ public class GameSettings<R extends Roll> {
                 && startingPieceCount == other.startingPieceCount
                 && safeRosettes == other.safeRosettes
                 && rosettesGrantExtraRolls == other.rosettesGrantExtraRolls
-                && capturesGrantExtraRolls == other.capturesGrantExtraRolls;
+                && capturesGrantExtraRolls == other.capturesGrantExtraRolls
+                && optionalBackwardMoves == other.optionalBackwardMoves;
     }
 }

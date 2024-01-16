@@ -92,7 +92,8 @@ public abstract class RuleSet<
                 playerStateProvider.getStartingPieceCount(),
                 areRosettesSafe(),
                 doRosettesGrantExtraRolls(),
-                doCapturesGrantExtraRolls()
+                doCapturesGrantExtraRolls(),
+                areOptionalBackwardMovesAllowed()
         );
     }
 
@@ -153,6 +154,13 @@ public abstract class RuleSet<
      * @return Whether capturing a piece grants an additional roll.
      */
     public abstract boolean doCapturesGrantExtraRolls();
+
+
+    /**
+     * Gets whether pieces are allowed optional backward moves.
+     * @return Whether a piece can move backwards.
+     */
+    public abstract boolean areOptionalBackwardMovesAllowed();
 
     /**
      * Generates the initial state for a game.

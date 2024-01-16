@@ -45,6 +45,11 @@ public class SimpleRuleSet<
     private final boolean capturesGrantExtraRolls;
 
     /**
+     * Whether pieces are allowed the option to move backwards.
+     */
+    private final boolean optionalBackwardMoves;
+
+    /**
      * Instantiates a simple rule set for the Royal Game of Ur.
      * @param boardShape The shape of the game board.
      * @param paths The paths that the players must take around the board.
@@ -63,12 +68,14 @@ public class SimpleRuleSet<
             @Nonnull PlayerStateProvider<P, S> playerStateProvider,
             boolean safeRosettes,
             boolean rosettesGrantExtraRolls,
-            boolean capturesGrantExtraRolls
+            boolean capturesGrantExtraRolls,
+            boolean optionalBackwardMoves
     ) {
         super(boardShape, paths, diceFactory, pieceProvider, playerStateProvider);
         this.safeRosettes = safeRosettes;
         this.rosettesGrantExtraRolls = rosettesGrantExtraRolls;
         this.capturesGrantExtraRolls = capturesGrantExtraRolls;
+        this.optionalBackwardMoves = optionalBackwardMoves;
     }
 
     public @Nonnull FastSimpleGame createCompatibleFastGame() {
@@ -89,6 +96,11 @@ public class SimpleRuleSet<
     @Override
     public boolean doCapturesGrantExtraRolls() {
         return capturesGrantExtraRolls;
+    }
+
+    @Override
+    public boolean areOptionalBackwardMovesAllowed() {
+        return optionalBackwardMoves;
     }
 
     @Override
@@ -170,6 +182,27 @@ public class SimpleRuleSet<
                 movedPiece = pieceProvider.createIntroduced(playerType, destPathIndex);
             }
             moves.add(new Move<>(playerType, tile, piece, dest, movedPiece, destPiece));
+
+            if (optionalBackwardMoves) {
+                destPathIndex = pathIndex - roll.value();
+                if (destPathIndex < 0) continue;
+
+                dest = path.get(destPathIndex);
+                destPiece = board.get(dest);
+
+                if (destPiece != null)  {
+                    // Can't capture your own pieces.
+                    if (destPiece.getOwner() == playerType)
+                        continue;
+
+                    // Can't capture pieces on rosettes if they are safe
+                    if (safeRosettes && boardShape.isRosette(dest))
+                        continue;
+                }
+
+                movedPiece = pieceProvider.createMoved(piece, destPathIndex);
+                moves.add(new Move<>(playerType, tile, piece, dest, movedPiece, destPiece));
+            }
         }
         return moves;
     }

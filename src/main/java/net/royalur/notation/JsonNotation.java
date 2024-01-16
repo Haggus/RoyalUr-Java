@@ -992,6 +992,8 @@ public class JsonNotation<
         boolean capturesGrantExtraRolls = helper.readBool(
                 json, CAPTURES_GRANT_EXTRA_ROLLS_KEY
         );
+        // TODO: Set always to false for now, enable when "moving backwards" logic is finished.
+        boolean optionalBackwardMoves = false;
         return new GameSettings<>(
                 boardShapes.get(boardShapeName).createBoardShape(),
                 pathPairs.get(pathsName).createPathPair(),
@@ -999,7 +1001,8 @@ public class JsonNotation<
                 startingPieceCount,
                 safeRosettes,
                 rosettesGrantExtraRolls,
-                capturesGrantExtraRolls
+                capturesGrantExtraRolls,
+                optionalBackwardMoves
         );
     }
 

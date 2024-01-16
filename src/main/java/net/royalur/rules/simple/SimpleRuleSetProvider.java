@@ -31,7 +31,8 @@ public class SimpleRuleSetProvider implements RuleSetProvider<Piece, PlayerState
                 stateProvider,
                 settings.areRosettesSafe(),
                 settings.doRosettesGrantExtraRolls(),
-                settings.doCapturesGrantExtraRolls()
+                settings.doCapturesGrantExtraRolls(),
+                settings.areOptionalBackwardMovesAllowed()
         );
     }
 }
