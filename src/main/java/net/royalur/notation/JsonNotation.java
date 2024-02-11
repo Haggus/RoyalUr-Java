@@ -745,7 +745,8 @@ public class JsonNotation<
                 player,
                 sourceTile, source,
                 destTile, dest,
-                captured
+                captured,
+                false // TODO: Fix hardcoded value.
         );
     }
 

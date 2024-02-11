@@ -135,7 +135,7 @@ public class SimpleRuleSet<
                     scorePiece.getOwner() == playerType &&
                     scorePiece.getPathIndex() == scorePathIndex
             ) {
-                moves.add(new Move<>(playerType, scoreTile, scorePiece, null, null, null));
+                moves.add(new Move<>(playerType, scoreTile, scorePiece, null, null, null, false));
             }
         }
 
@@ -181,7 +181,7 @@ public class SimpleRuleSet<
             } else {
                 movedPiece = pieceProvider.createIntroduced(playerType, destPathIndex);
             }
-            moves.add(new Move<>(playerType, tile, piece, dest, movedPiece, destPiece));
+            moves.add(new Move<>(playerType, tile, piece, dest, movedPiece, destPiece, false));
 
             if (optionalBackwardMoves) {
                 destPathIndex = pathIndex - roll.value();
@@ -201,7 +201,7 @@ public class SimpleRuleSet<
                 }
 
                 movedPiece = pieceProvider.createMoved(piece, destPathIndex);
-                moves.add(new Move<>(playerType, tile, piece, dest, movedPiece, destPiece));
+                moves.add(new Move<>(playerType, tile, piece, dest, movedPiece, destPiece, true));
             }
         }
         return moves;

@@ -108,7 +108,8 @@ public class SimpleRuleSetTest {
                                 null, null,
                                 paths.get(player).get(roll - 1),
                                 new Piece(player, roll - 1),
-                                null
+                                null,
+                                false
                         )),
                         rules.findAvailableMoves(board, playerState, SimpleRoll.of(roll))
                 );

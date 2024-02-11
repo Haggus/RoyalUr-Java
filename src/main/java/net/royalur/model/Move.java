@@ -49,6 +49,11 @@ public class Move<P extends Piece> {
     private final @Nullable P capturedPiece;
 
     /**
+     * Is the move optional, or is player required to take it.
+     */
+    private final @Nonnull boolean isOptional;
+
+    /**
      * Creates a new move with origin {@code source} and destination {@code dest}.
      * If {@code source} is {@code null}, it represents moving a new piece onto
      * the board. If {@code dest} is {@code null}, it represents moving a piece
@@ -65,12 +70,13 @@ public class Move<P extends Piece> {
      *                  {@code null} if moving a piece off of the board.
      * @param capturedPiece The piece that will be captured by this move, or {@code null}
      *                       if no piece would be captured by this move.
+     * @param isOptional  Is the move optional, or is player required to take it.
      */
     public Move(
             @Nonnull PlayerType player,
             @Nullable Tile source, @Nullable P sourcePiece,
             @Nullable Tile dest, @Nullable P destPiece,
-            @Nullable P capturedPiece
+            @Nullable P capturedPiece, @Nonnull boolean isOptional
     ) {
         if ((source == null) ^ (sourcePiece == null))
             throw new IllegalArgumentException("source and sourcePiece must either be both null, or both non-null");
@@ -85,6 +91,7 @@ public class Move<P extends Piece> {
         this.sourcePiece = sourcePiece;
         this.destPiece = destPiece;
         this.capturedPiece = capturedPiece;
+        this.isOptional = isOptional;
     }
 
     /**
